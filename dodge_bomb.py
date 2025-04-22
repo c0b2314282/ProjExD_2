@@ -14,13 +14,13 @@ DELTA = {
     }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+
 def check_bound(rct:pg.Rect) -> tuple[bool, bool]:
     """
     引数:こうかとんRectまたは爆弾Rect
     戻り値:判定結果タプル（横、縦）
     画面内ならTrue, 画面がならFalse
     """
-    
     yoko, tate = True, True #横、縦方向用の変数
     #横方向判定
     if  rct.left < 0 or WIDTH < rct.right: #画面内だったら
@@ -30,13 +30,12 @@ def check_bound(rct:pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
-def init_bb_imgs() -> tuple[list[pg.SUrface], list[int]]:
-    bb_accs = [a for a in range(1, 11)]
-    for r in range(1, 11):
-        bb_img = pg.Surface((20*r, 20*r))
-        pg.draw.circle(bb_img, (255, 0, 0),(10*r, 10*r), 10*r )
-    
 
+#def init_bb_imgs() -> tuple[list[pg.SUrface], list[int]]:
+#    bb_accs = [a for a in range(1, 11)]
+#       bb_img = pg.Surface((20*r, 20*r))
+#        pg.draw.circle(bb_img, (255, 0, 0),(10*r, 10*r), 10*r )
+    
 
 def gameover(screen: pg.Surface) -> None:
     go_surface = pg.Surface((WIDTH, HEIGHT))
@@ -53,8 +52,7 @@ def gameover(screen: pg.Surface) -> None:
     screen.blit(img7,(740, HEIGHT / 2))
     pg.display.update()
     time.sleep(5)
-    
-    
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -72,10 +70,9 @@ def main():
     bb_rct.centery = random.randint(0, HEIGHT)
     bb_img.set_colorkey((0, 0, 0))
     vx, vy = +5, +5
-
-
     clock = pg.time.Clock()
     tmr = 0
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -117,15 +114,14 @@ def main():
             vy *= -1
         screen.blit(bb_img, bb_rct) #爆弾の描画
 
-        bb_imgs, bb_accs = init_bb_imgs()
-        avx = vx*bb_accs[min(tmr//500, 9)]
-        bb_img = bb_imgs[min(tmr//500, 9)]
-
+        #bb_imgs, bb_accs = init_bb_imgs()
+        #avx = vx*bb_accs[min(tmr//500, 9)]
+        #bb_img = bb_imgs[min(tmr//500, 9)]
         pg.display.update()
         tmr += 1
         clock.tick(50)
     
-
+    
 if __name__ == "__main__":
     pg.init()
     main()
